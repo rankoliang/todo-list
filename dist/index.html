@@ -14,12 +14,71 @@
     <main>
       <div class="container">
         <div class="project">
-          <h2>Learn to use this todo list</h2>
+          <h2 class="project--title">Learn to use this todo list</h2>
           <div class="project--card">
             <div class="todo">
               <input type="checkbox" name="todo-complete" id="todo-complete" />
               <div class="todo--important">
                 <span class="Title">Make a project</span> - <span>Click the New Project button below.</span>
+              </div>
+              <div class="todo--info">
+                <div class="todo--due-date">Due <time datetime="12-31-2020">12/31/2020</time></div>
+                <div class="todo--buttons">
+                  <button type="button" class="todo--edit">Edit</button>
+                  <button type="button" class="todo--delete">Delete</button>
+                </div>
+              </div>
+            </div>
+            <div class="todo">
+              <input type="checkbox" name="todo-complete" id="todo-complete" />
+              <div class="todo--important">
+                <span class="Title">Make a new Todo for the project</span> -
+                <span>Click the add todo button below</span>
+              </div>
+              <div class="todo--info">
+                <div class="todo--due-date">Due <time datetime="12-31-2020">12/31/2020</time></div>
+                <div class="todo--buttons">
+                  <button type="button" class="todo--edit">Edit</button>
+                  <button type="button" class="todo--delete">Delete</button>
+                </div>
+              </div>
+            </div>
+            <button type="button" class="btn btn__yellow project--new-todo">New Todo</button>
+          </div>
+        </div>
+        <div class="project">
+          <div class="project--edit-title">
+            <input
+              type="text"
+              class="project--title"
+              name="project-title"
+              id="project-title"
+              placeholder="Project Title"
+              value="Edit a todo list"
+              size="8"
+            />
+            <button type="button" class="btn btn__red" name="cancel-project-rename">N</button>
+            <button type="button" class="btn btn__green" name="confirm-project-rename">Y</button>
+          </div>
+          <div class="project--card">
+            <div class="todo">
+              <input type="checkbox" name="todo-complete" id="todo-complete" />
+              <div class="todo--important">
+                <span class="Title">Make a project</span> - <span>Click the New Project button below.</span>
+              </div>
+              <div class="todo--info">
+                <div class="todo--due-date">Due <time datetime="12-31-2020">12/31/2020</time></div>
+                <div class="todo--buttons">
+                  <button type="button" class="todo--edit">Edit</button>
+                  <button type="button" class="todo--delete">Delete</button>
+                </div>
+              </div>
+            </div>
+            <div class="todo">
+              <input type="checkbox" name="todo-complete" id="todo-complete" />
+              <div class="todo--important">
+                <span class="Title">Make a new Todo for the project</span> -
+                <span>Click the add todo button below</span>
               </div>
               <div class="todo--info">
                 <div class="todo--due-date">Due <time datetime="12-31-2020">12/31/2020</time></div>
