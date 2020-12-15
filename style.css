@@ -4,6 +4,7 @@
   font-family: "Open Sans", sans-serif;
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 body {
@@ -34,6 +35,14 @@ header h1 {
 
 .container {
   margin: 10px;
+  max-width: 768px;
+  min-width: 200px;
+}
+
+@media screen and (min-width: 788px) {
+  .container {
+    margin: 0 auto;
+  }
 }
 
 .btn {
@@ -51,9 +60,51 @@ header h1 {
   background-color: #e7d114;
 }
 
-.project h2 {
+.btn__red {
+  color: white;
+  background-color: #FF0000;
+}
+
+.btn__red:hover,
+.btn__red:focus {
+  background-color: #CE0101;
+}
+
+.btn__green {
+  color: white;
+  background-color: #41ca00;
+}
+
+.btn__green:hover,
+.btn__green:focus {
+  background-color: #329700;
+}
+
+.project--title {
   font-size: 16px;
   color: #555555;
+}
+
+.project--edit-title {
+  display: flex;
+  width: 100%;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  font-weight: bold;
+  font-family: "Roboto", sans-serif;
+}
+
+.project--edit-title .btn {
+  margin-left: 0.25em;
+}
+
+input.project--title {
+  padding-left: 0.25em;
+  padding-right: 0.25em;
+  flex: 1;
+  border: 1px solid black;
+  border-radius: 0;
+  outline: 0;
 }
 
 .project--card {
