@@ -1,0 +1,118 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto:wght@700&display=swap");
+
+* {
+  font-family: "Open Sans", sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #f0f0f0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+  margin-top: 0.2em;
+  margin-bottom: 0.2em;
+}
+
+header {
+  background: #f9e323;
+  display: flex;
+  justify-content: center;
+}
+
+header h1 {
+  font-size: 18px;
+}
+
+.container {
+  margin: 10px;
+}
+
+.btn {
+  border: 1px solid black;
+  padding: 0.1em 0.5em;
+  outline: none;
+}
+
+.btn__yellow {
+  background-color: #f9e323;
+}
+
+.btn__yellow:hover,
+.btn__yellow:focus {
+  background-color: #e7d114;
+}
+
+.project h2 {
+  font-size: 16px;
+  color: #555555;
+}
+
+.project--card {
+  background-color: white;
+  padding: 5px 10px;
+  display: grid;
+  justify-items: start;
+  grid-gap: 3px;
+}
+
+.todo {
+  display: grid;
+  grid-column-gap: 5px;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto;
+}
+
+.todo input[type="checkbox"] {
+  grid-row: 1 / -1;
+  grid-column-start: 1;
+}
+
+.todo--important {
+  font-size: 10px;
+}
+
+.todo--info {
+  font-size: 8px;
+  display: flex;
+}
+
+.todo--buttons {
+  display: flex;
+}
+
+.todo--info > *,
+.todo--buttons button {
+  margin-right: 0.25em;
+}
+
+.todo--due-date {
+  color: #555555;
+}
+
+.todo--buttons button {
+  background: inherit;
+  border: 0;
+  outline: none;
+}
+
+.todo--buttons button:hover,
+.todo--buttons button:focus {
+  text-decoration: underline;
+}
+
+.todo--delete {
+  color: #ce0101;
+}
+
+.project--new-todo {
+  font-size: 9px;
+}

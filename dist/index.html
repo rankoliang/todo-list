@@ -4,8 +4,50 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Todo List</title>
+    <link rel="stylesheet" href="normalize.css" type="text/css" media="all" />
+    <link rel="stylesheet" href="style.css" type="text/css" media="all" />
   </head>
   <body>
+    <header>
+      <h1>Todo List</h1>
+    </header>
+    <main>
+      <div class="container">
+        <div class="project">
+          <h2>Learn to use this todo list</h2>
+          <div class="project--card">
+            <div class="todo">
+              <input type="checkbox" name="todo-complete" id="todo-complete" />
+              <div class="todo--important">
+                <span class="Title">Make a project</span> - <span>Click the New Project button below.</span>
+              </div>
+              <div class="todo--info">
+                <div class="todo--due-date">Due <time datetime="12-31-2020">12/31/2020</time></div>
+                <div class="todo--buttons">
+                  <button type="button" class="todo--edit">Edit</button>
+                  <button type="button" class="todo--delete">Delete</button>
+                </div>
+              </div>
+            </div>
+            <div class="todo">
+              <input type="checkbox" name="todo-complete" id="todo-complete" />
+              <div class="todo--important">
+                <span class="Title">Make a new Todo for the project</span> -
+                <span>Click the add todo button below</span>
+              </div>
+              <div class="todo--info">
+                <div class="todo--due-date">Due <time datetime="12-31-2020">12/31/2020</time></div>
+                <div class="todo--buttons">
+                  <button type="button" class="todo--edit">Edit</button>
+                  <button type="button" class="todo--delete">Delete</button>
+                </div>
+              </div>
+            </div>
+            <button type="button" class="btn btn__yellow project--new-todo">New Todo</button>
+          </div>
+        </div>
+      </div>
+    </main>
     <script src="main.js" charset="utf-8"></script>
   </body>
 </html>
