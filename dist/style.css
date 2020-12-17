@@ -33,10 +33,30 @@ header h1 {
   font-size: 18px;
 }
 
+a:hover,
+.btn:hover {
+  cursor: pointer;
+}
+
 .container {
   margin: 10px;
   max-width: 768px;
   min-width: 200px;
+}
+
+.form-field {
+  margin: 0.25em 0;
+  display: flex;
+  align-items: baseline;
+}
+
+.form-field input,
+.form-field select {
+  margin: 0 0.25em;
+}
+
+.form-field input[type="text"] {
+  flex: 1;
 }
 
 @media screen and (min-width: 788px) {
@@ -49,6 +69,8 @@ header h1 {
   border: 1px solid black;
   padding: 0.1em 0.5em;
   outline: none;
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
 }
 
 .btn__yellow {
@@ -62,12 +84,12 @@ header h1 {
 
 .btn__red {
   color: white;
-  background-color: #FF0000;
+  background-color: #ff0000;
 }
 
 .btn__red:hover,
 .btn__red:focus {
-  background-color: #CE0101;
+  background-color: #ce0101;
 }
 
 .btn__green {
@@ -85,16 +107,24 @@ header h1 {
   color: #555555;
 }
 
+.project--title-group {
+  display: flex;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.project--title-group .btn {
+  font-size: 12px;
+}
+
 .project--edit-title {
   display: flex;
   width: 100%;
-  margin-top: 0.5em;
-  margin-bottom: 0.5em;
   font-weight: bold;
   font-family: "Roboto", sans-serif;
 }
 
-.project--edit-title .btn {
+.project--title-group .btn {
   margin-left: 0.25em;
 }
 
@@ -107,6 +137,10 @@ input.project--title {
   outline: 0;
 }
 
+.project--new-todo {
+  font-size: 9px;
+}
+
 .project--card {
   background-color: white;
   padding: 5px 10px;
@@ -116,6 +150,7 @@ input.project--title {
 }
 
 .todo {
+  width: 100%;
   display: grid;
   grid-column-gap: 5px;
   grid-template-columns: auto 1fr;
@@ -125,9 +160,11 @@ input.project--title {
 .todo input[type="checkbox"] {
   grid-row: 1 / -1;
   grid-column-start: 1;
+  align-self: center;
 }
 
-.todo--important {
+.todo--important,
+.form-field {
   font-size: 10px;
 }
 
@@ -160,10 +197,22 @@ input.project--title {
   text-decoration: underline;
 }
 
-.todo--delete {
+.todo--priority {
+  font-weight: bold;
+}
+
+.todo--priority__high {
   color: #ce0101;
 }
 
-.project--new-todo {
-  font-size: 9px;
+.todo--priority__medium {
+  color: #ff8c00;
+}
+
+.todo--priority__low {
+  color: #41ca00;
+}
+
+.todo--delete {
+  color: #ce0101;
 }
