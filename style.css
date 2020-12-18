@@ -68,6 +68,7 @@ a:hover,
 .btn {
   border: 1px solid black;
   padding: 0.1em 0.5em;
+  border-radius: 3px;
   outline: none;
   font-family: "Roboto", sans-serif;
   font-weight: bold;
@@ -111,10 +112,12 @@ a:hover,
   display: flex;
   margin-top: 0.5em;
   margin-bottom: 0.5em;
+  align-items: center;
 }
 
 .project--title-group .btn {
   font-size: 12px;
+  margin-left: 0.25em;
 }
 
 .project--edit-title {
@@ -122,10 +125,6 @@ a:hover,
   width: 100%;
   font-weight: bold;
   font-family: "Roboto", sans-serif;
-}
-
-.project--title-group .btn {
-  margin-left: 0.25em;
 }
 
 input.project--title {
@@ -215,4 +214,9 @@ input.project--title {
 
 .todo--delete {
   color: #ce0101;
+}
+
+.project--create {
+  margin: .25em 0;
+  font-size: 12px;
 }

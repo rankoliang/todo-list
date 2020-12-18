@@ -17,8 +17,8 @@
           <div class="project--title-group">
             <h2 class="project--title">Learn to use this todo list</h2>
             <form>
-              <input type="button" name="edit-project" value="Edit" class="btn btn__yellow">
-              <input type="button" name="delete-project" value="Delete" class="btn btn__red">
+              <input type="button" name="edit-project" value="Edit" class="btn btn__yellow" />
+              <input type="button" name="delete-project" value="Delete" class="btn btn__red" />
             </form>
           </div>
           <div class="project--card">
@@ -26,7 +26,7 @@
               <input type="checkbox" name="todo-complete" id="todo-complete" />
               <div class="todo--important">
                 <span class="todo--title">Make a project</span> -
-                <span class="todo--description">Click the New Project button below.</span>
+                <span class="todo--description">Click the New Project button</span>
               </div>
               <div class="todo--info">
                 <div class="todo--priority todo--priority__high">High Priority</div>
@@ -40,8 +40,23 @@
             <div class="todo">
               <input type="checkbox" name="todo-complete" id="todo-complete" />
               <div class="todo--important">
-                <span class="todo--title">Make a new Todo for the project</span> -
-                <span class="todo--description">Click the New Project button below.</span>
+                <span class="Title">Make a new Todo for the project</span> -
+                <span>Click the add todo button</span>
+              </div>
+              <div class="todo--info">
+                <div class="todo--priority todo--priority__medium">Medium Priority</div>
+                <div class="todo--due-date">Due <time datetime="12-31-2020">12/31/2020</time></div>
+                <div class="todo--buttons">
+                  <button type="button" class="todo--edit">Edit</button>
+                  <button type="button" class="todo--delete">Delete</button>
+                </div>
+              </div>
+            </div>
+            <div class="todo">
+              <input type="checkbox" name="todo-complete" id="todo-complete" />
+              <div class="todo--important">
+                <span class="todo--title">Edit a todo</span> -
+                <span class="todo--description">click the edit button below a todo</span>
               </div>
               <div class="todo--info">
                 <div class="todo--priority todo--priority__low">Low Priority</div>
@@ -99,24 +114,12 @@
                 </div>
               </div>
             </div>
-            <div class="todo">
-              <input type="checkbox" name="todo-complete" id="todo-complete" />
-              <div class="todo--important">
-                <span class="Title">Make a new Todo for the project</span> -
-                <span>Click the add todo button below</span>
-              </div>
-              <div class="todo--info">
-                <div class="todo--priority todo--priority__medium">Medium Priority</div>
-                <div class="todo--due-date">Due <time datetime="12-31-2020">12/31/2020</time></div>
-                <div class="todo--buttons">
-                  <button type="button" class="todo--edit">Edit</button>
-                  <button type="button" class="todo--delete">Delete</button>
-                </div>
-              </div>
-            </div>
             <button type="button" class="btn btn__yellow project--new-todo">New Todo</button>
           </form>
         </div>
+        <form>
+          <button type="button" class="btn btn__yellow project--create">New Project</button>
+        </form>
       </div>
     </main>
     <script src="main.js" charset="utf-8"></script>
