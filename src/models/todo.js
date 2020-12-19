@@ -5,14 +5,13 @@ class Todo extends Model {
     return "Todo";
   }
 
-  constructor({ id, title, description, priority }) {
-    super({ id });
-    this.title = title;
-    this.description = description;
-    this.priority = priority;
+  static get properties() {
+    return {
+      title: String,
+      description: String,
+      priority: String,
+    };
   }
 }
-
-Model.register(Todo);
 
 export default Todo;
