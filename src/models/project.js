@@ -19,6 +19,11 @@ class Project extends Model {
   get todos() {
     return Todo.all.filter((todo) => todo.project_id === this.id);
   }
+
+  static delete(id) {
+    this.find(id).todos.forEach((todo) => todo.delete());
+    super.delete(id);
+  }
 }
 
 export default Project;

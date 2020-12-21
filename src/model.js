@@ -38,6 +38,10 @@ class BaseModel {
     return model;
   }
 
+  static find(id) {
+    return this._staticProperties.all[id];
+  }
+
   static delete(id) {
     delete this._staticProperties.all[id];
     this.save();

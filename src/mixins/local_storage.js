@@ -36,7 +36,7 @@ const LocalStorageMixin = (Base) =>
         this.id = this.constructor.id;
       }
 
-      this.constructor._staticProperties.all[this.id] = Object.assign({}, this);
+      this.constructor._staticProperties.all[this.id] = Object.assign(new this.constructor(), this);
 
       this.constructor.save();
 
