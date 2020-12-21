@@ -31,6 +31,18 @@ class BaseModel {
     return this._staticProperties.id++;
   }
 
+  static get id_key() {
+    return `${this.model.toLowerCase()}_id`;
+  }
+
+  static get _parent() {
+    return this.references.parent;
+  }
+
+  static get references() {
+    return {};
+  }
+
   static create(model_params) {
     const model = new this(model_params);
     model.save();
@@ -54,6 +66,15 @@ class BaseModel {
   assign_attributes(model_params) {
     // validates types
     Object.assign(this, model_params);
+
+    // dynamically sets a parent attribute
+    (() => {
+      if (this.constructor._parent) {
+        this[this.constructor._parent.model.toLowerCase()] = this.constructor._parent.all.find(
+          (parent_object) => parent_object.id === this[this.constructor._parent.id_key]
+        );
+      }
+    })();
   }
 
   update(model_params) {

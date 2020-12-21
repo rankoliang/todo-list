@@ -1,4 +1,5 @@
 import Model from "../model";
+import ModelCollection from "../model_collection";
 import Todo from "./todo";
 
 class Project extends Model {
@@ -12,12 +13,8 @@ class Project extends Model {
     };
   }
 
-  buildTodo({ ...todo_params }) {
-    return new Todo({ ...todo_params, project_id: this.id });
-  }
-
   get todos() {
-    return Todo.all.filter((todo) => todo.project_id === this.id);
+    return new ModelCollection({ parent: this, model: Todo });
   }
 
   static delete(id) {

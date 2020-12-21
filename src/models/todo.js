@@ -15,8 +15,10 @@ class Todo extends Model {
     };
   }
 
-  get project() {
-    return Project.all.find((project) => project.id === this.project_id);
+  static get references() {
+    return {
+      parent: Project,
+    };
   }
 }
 
