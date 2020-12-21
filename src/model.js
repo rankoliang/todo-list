@@ -38,6 +38,15 @@ class BaseModel {
     return model;
   }
 
+  static delete(id) {
+    delete this._staticProperties.all[id];
+    this.save();
+  }
+
+  delete() {
+    this.constructor.delete(this.id);
+  }
+
   assign_attributes(model_params) {
     // validates types
     Object.assign(this, model_params);

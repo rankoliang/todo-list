@@ -6,9 +6,14 @@ const LocalStorageMixin = (Base) =>
       }
 
       // Load all model instances from local storage
-      this._staticProperties.all = JSON.parse(localStorage.getItem(this.model)).map(
-        (model_params) => new this(model_params)
-      );
+      this._staticProperties.all = function () {
+        const table = JSON.parse(localStorage.getItem(this.model)).map((model_params) => [
+          model_params.id,
+          new this(model_params),
+        ]);
+
+        return Object.fromEntries(table);
+      }.call(this);
 
       // sets the next model id to one above the max
       this._staticProperties.id = this._table.reduce((max_id, model) => {
@@ -33,9 +38,13 @@ const LocalStorageMixin = (Base) =>
 
       this.constructor._staticProperties.all[this.id] = Object.assign({}, this);
 
-      localStorage.setItem(this.constructor.model, JSON.stringify(this.constructor._table));
+      this.constructor.save();
 
       return this;
+    }
+
+    static save() {
+      localStorage.setItem(this.model, JSON.stringify(this._table));
     }
   };
 
