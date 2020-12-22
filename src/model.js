@@ -1,8 +1,8 @@
 import LocalStorageMixin from "./mixins/local_storage";
-import { objectMap } from "./helpers";
+import { objectMap, cast } from "./helpers";
 
 class BaseModel {
-  constructor({ id = null, ...model_params } = {}) {
+  constructor({ id = null, format, ...model_params } = {}) {
     this.id = id;
 
     // initializes properties to null
@@ -10,6 +10,11 @@ class BaseModel {
       this,
       objectMap(this.constructor.properties, ([key]) => [key, null])
     );
+
+    Object.defineProperties(this, {
+      _errors: { enumerable: false, writable: true },
+      _load_format: { value: format, enumerable: false },
+    });
 
     this.assign_attributes(model_params);
   }
@@ -56,10 +61,15 @@ class BaseModel {
   }
 
   assign_attributes(model_params) {
-    // validates types
-    Object.assign(this, model_params);
+    Object.assign(this, this.constructor.sanitize_params(model_params, this._load_format));
 
     this.assign_parent();
+  }
+
+  static sanitize_params(model_params, load_format) {
+    return objectMap(model_params, ([key, value]) => {
+      return [key, cast(this.properties[key], load_format)(value)];
+    });
   }
 
   assign_parent() {

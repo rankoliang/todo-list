@@ -1,9 +1,18 @@
 class ModelCollection extends Array {
   constructor({ parent, model }) {
     super();
-    this._model = model;
-    this._parent = parent;
-    this.push(...model.all.filter((model_object) => model_object[this._parent.constructor.id_key] === parent.id))
+    Object.defineProperties(this, {
+      _model: {
+        value: model,
+        enumerable: false,
+      },
+      _parent: {
+        value: parent,
+        enumerable: false,
+      },
+    });
+
+    this.push(...model.all.filter((model_object) => model_object[this._parent.constructor.id_key] === parent.id));
   }
 
   build({ ...model_params }) {

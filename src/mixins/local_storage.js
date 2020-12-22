@@ -7,10 +7,9 @@ const LocalStorageMixin = (Base) =>
 
       // Load all model instances from local storage
       this._staticProperties.all = function () {
-        const table = JSON.parse(localStorage.getItem(this.model)).map((model_params) => [
-          model_params.id,
-          new this(model_params),
-        ]);
+        const table = JSON.parse(localStorage.getItem(this.model)).map((model_params) => {
+          return [model_params.id, new this({ ...model_params, format: "JSON" })];
+        });
 
         return Object.fromEntries(table);
       }.call(this);

@@ -12,6 +12,7 @@ class Todo extends Model {
       description: String,
       priority: String,
       project_id: Number,
+      due_date: Date,
     };
   }
 
