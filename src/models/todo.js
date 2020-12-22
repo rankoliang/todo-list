@@ -15,10 +15,8 @@ class Todo extends Model {
     };
   }
 
-  static get references() {
-    return {
-      parent: Project,
-    };
+  static get parents() {
+    return [Project];
   }
 }
 

@@ -3,11 +3,7 @@ class ModelCollection extends Array {
     super();
     this._model = model;
     this._parent = parent;
-    model.all
-      .filter((model_object) => model_object[this._parent.constructor.id_key] === parent.id)
-      .forEach((model_object) => {
-        this.push(model_object);
-      });
+    this.push(...model.all.filter((model_object) => model_object[this._parent.constructor.id_key] === parent.id))
   }
 
   build({ ...model_params }) {

@@ -35,14 +35,6 @@ class BaseModel {
     return `${this.model.toLowerCase()}_id`;
   }
 
-  static get _parent() {
-    return this.references.parent;
-  }
-
-  static get references() {
-    return {};
-  }
-
   static create(model_params) {
     const model = new this(model_params);
     model.save();
@@ -67,18 +59,23 @@ class BaseModel {
     // validates types
     Object.assign(this, model_params);
 
+    this.assign_parent();
+  }
+
+  assign_parent() {
+    if (!this.parents) {
+      return;
+    }
+
     // dynamically sets a parent attribute
-    (() => {
-      if (this.constructor._parent) {
-        this[this.constructor._parent.model.toLowerCase()] = this.constructor._parent.all.find(
-          (parent_object) => parent_object.id === this[this.constructor._parent.id_key]
-        );
-      }
-    })();
+    this.parents.forEach((parent) => {
+      this[parent.model.toLowerCase()] = parent.all.find((parent_object) => parent_object.id === this[parent.id_key]);
+    });
   }
 
   update(model_params) {
     this.assign_attributes(model_params);
+
     return this.save();
   }
 
