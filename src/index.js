@@ -1,18 +1,22 @@
-import Todo from "./models/todo";
-import Project from "./models/project";
+import Todo from "./javascript/models/todo";
+import Project from "./javascript/models/project";
 
 localStorage.clear();
 
-const proj = new Project({ title: "Lorem Ipsum" });
-proj.save();
+const project = Project.create({ title: "Lorem Ipsum" });
 
-const todo = proj.todos.create({
+project.todos.create({
   title: "Title",
   description: "description",
   priority: "low",
   due_date: Date.now(),
 });
 
-const td2 = proj.todos.create({ title: "Lorem Ipsum", description: "desc", priority: "medium", due_date: Date.now() });
+project.todos.create({
+  title: "Lorem Ipsum",
+  description: "desc",
+  priority: "medium",
+  due_date: Date.now(),
+});
 
-console.table(Todo.all);
+console.table(Todo.all, Object.keys(Todo.properties));
