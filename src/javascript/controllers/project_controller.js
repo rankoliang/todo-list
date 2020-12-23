@@ -1,5 +1,5 @@
 import Project from "../models/project";
-import ProjectRenderer from "../renderers/project_renderer.js";
+import ProjectRenderer from "../renderers/project_renderer";
 
 class ProjectController {
   constructor(renderer = ProjectRenderer) {

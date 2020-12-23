@@ -1,6 +1,5 @@
 import Project from "./javascript/models/project";
 import project_controller from "./javascript/controllers/project_controller";
-import todo_controller from "./javascript/controllers/todo_controller";
 
 localStorage.clear();
 
@@ -20,7 +19,13 @@ project.todos.create({
   due_date: Date.now(),
 });
 
-Project.create({ title: "Project 2" });
+const todos = Project.create({ title: "Project 2" }).todos;
+
+todos.create({
+  title: "Ipsum Lorem",
+  description: "hello world",
+  priority: "high",
+  due_date: new Date(2021, 10, 31),
+});
 
 project_controller.index();
-todo_controller.index();

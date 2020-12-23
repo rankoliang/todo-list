@@ -10,13 +10,13 @@ class Renderer {
   }
 
   render(route, route_params) {
+    this.constructor.clearNode(this.content);
+
     this.buildComponent(route, route_params, this.content);
   }
 
   buildComponent(route, route_params, parentNode) {
     Object.assign(this, route_params);
-
-    this.constructor.clearNode(parentNode);
 
     this[route]().forEach((component) => {
       parentNode.appendChild(component);
