@@ -1,5 +1,6 @@
 import Project from "./javascript/models/project";
 import project_controller from "./javascript/controllers/project_controller";
+import todo_controller from "./javascript/controllers/todo_controller";
 
 localStorage.clear();
 
@@ -22,3 +23,4 @@ project.todos.create({
 Project.create({ title: "Project 2" });
 
 project_controller.index();
+todo_controller.index();
