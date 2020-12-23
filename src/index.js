@@ -1,5 +1,5 @@
-import Todo from "./javascript/models/todo";
 import Project from "./javascript/models/project";
+import project_controller from "./javascript/controllers/project_controller";
 
 localStorage.clear();
 
@@ -19,4 +19,6 @@ project.todos.create({
   due_date: Date.now(),
 });
 
-console.table(Todo.all, Object.keys(Todo.properties));
+Project.create({ title: "Project 2" });
+
+project_controller.index();
