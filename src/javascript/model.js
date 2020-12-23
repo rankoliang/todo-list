@@ -37,7 +37,7 @@ class BaseModel {
   }
 
   static get id_key() {
-    return `${this.model.toLowerCase()}_id`;
+    return `${this.model.toLowerCase()}Id`;
   }
 
   static create(model_params) {

@@ -1,5 +1,6 @@
 import Model from "../model";
 import Project from "./project";
+import { format } from "date-fns";
 
 class Todo extends Model {
   static get model() {
@@ -11,13 +12,17 @@ class Todo extends Model {
       title: String,
       description: String,
       priority: String,
-      project_id: Number,
-      due_date: Date,
+      projectId: Number,
+      dueDate: Date,
     };
   }
 
   static get parents() {
     return [Project];
+  }
+
+  get formatted_date() {
+    return format(this.dueDate, "MM-dd-yyyy");
   }
 }
 

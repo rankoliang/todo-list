@@ -4,22 +4,29 @@ class TodoRenderer extends Renderer {
   index() {
     return this.todos.map((todo) => {
       const elements = {
-        title: { tag: "h4" },
+        title: { tag: "h3" },
         description: { tag: "p" },
         priority: { tag: "div" },
-        due_date: { tag: "div" },
+        dueDate: { tag: "div", textContent: todo.formatted_date },
       };
 
-      const todoComponents = document.createElement("div");
+      const todoComponent = document.createElement("div");
+      todoComponent.classList.add("todo", "project--card");
 
       for (const attribute in elements) {
-        const component = document.createElement(elements[attribute].tag);
-        component.textContent = todo[attribute];
+        (() => {
+          const { tag, textContent, classes } = elements[attribute];
+          const component = document.createElement(tag);
+          component.textContent = textContent || todo[attribute];
+          if (classes) {
+            component.classList.add(...classes);
+          }
 
-        todoComponents.appendChild(component);
+          todoComponent.appendChild(component);
+        })();
       }
 
-      return todoComponents;
+      return todoComponent;
     });
   }
 }

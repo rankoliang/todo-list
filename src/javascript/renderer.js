@@ -15,12 +15,14 @@ class Renderer {
     this.buildComponent(route, route_params, this.content);
   }
 
-  buildComponent(route, route_params, parentNode) {
+  buildComponent(route, route_params, parentNode = document.createElement("div")) {
     Object.assign(this, route_params);
 
     this[route]().forEach((component) => {
       parentNode.appendChild(component);
     });
+
+    return parentNode;
   }
 }
 
