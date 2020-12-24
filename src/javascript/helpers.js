@@ -37,4 +37,8 @@ function attach(component, ...children) {
   return component;
 }
 
-export { objectMap, cast, build, attach };
+function capitalize(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+export { objectMap, cast, build, attach, capitalize };

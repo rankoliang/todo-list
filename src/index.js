@@ -9,14 +9,12 @@ project.todos.create({
   title: "Title",
   description: "description",
   priority: "low",
-  dueDate: Date.now(),
 });
 
 project.todos.create({
   title: "Lorem Ipsum",
   description: "desc",
   priority: "medium",
-  dueDate: Date.now(),
 });
 
 const todos = Project.create({ title: "Project 2" }).todos;

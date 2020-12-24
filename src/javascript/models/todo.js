@@ -3,6 +3,17 @@ import Project from "./project";
 import { format } from "date-fns";
 
 class Todo extends Model {
+  constructor(...args) {
+    super(...args);
+  }
+
+  static get defaults() {
+    return {
+      complete: false,
+      dueDate: Date.now(),
+    };
+  }
+
   static get model() {
     return "Todo";
   }
@@ -14,6 +25,7 @@ class Todo extends Model {
       priority: String,
       projectId: Number,
       dueDate: Date,
+      complete: Boolean,
     };
   }
 
@@ -22,7 +34,7 @@ class Todo extends Model {
   }
 
   get formatted_date() {
-    return format(this.dueDate, "MM-dd-yyyy");
+    return format(this.dueDate, "MM/dd/yyyy");
   }
 }
 

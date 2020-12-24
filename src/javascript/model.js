@@ -11,6 +11,10 @@ class BaseModel {
       objectMap(this.constructor.properties, ([key]) => [key, null])
     );
 
+    if (this.constructor.defaults) {
+      Object.assign(this, this.constructor.sanitize_params(this.constructor.defaults));
+    }
+
     Object.defineProperties(this, {
       _errors: { enumerable: false, writable: true },
       _load_format: { value: format, enumerable: false },

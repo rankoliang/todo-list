@@ -1,9 +1,9 @@
 import Renderer from "../renderer";
-import projectComponent from "./components/project";
+import { projectIndex } from "./views/project";
 
 class ProjectRenderer extends Renderer {
   index() {
-    return this.projects.map(projectComponent);
+    return projectIndex(this.projects);
   }
 }
 
