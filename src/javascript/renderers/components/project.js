@@ -1,33 +1,11 @@
+import { build } from "../../helpers";
+
 const projectComponent = function (project) {
-  const _header = (function () {
-    const component = document.createElement("h2");
-    component.classList.add("project--title");
-    component.textContent = project.title;
+  const _header = build({ tag: "h2", classes: ["project--title"], textContent: project.title });
 
-    return component;
-  })();
+  const _title_group = build({ tag: "div", classes: ["project--title-group"] }, _header);
 
-  const _title_group = (function () {
-    const component = document.createElement("div");
-    component.classList.add("project--title-group");
-
-    [_header].forEach((child) => {
-      component.appendChild(child);
-    });
-
-    return component;
-  })();
-
-  const pc = (function () {
-    const component = document.createElement("div");
-    component.classList.add("project");
-
-    [_title_group].forEach((child) => {
-      component.appendChild(child);
-    });
-
-    return component;
-  })();
+  const pc = build({ tag: "div", classes: ["project"] }, _title_group);
 
   return pc;
 };
