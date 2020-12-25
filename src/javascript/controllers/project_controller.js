@@ -17,15 +17,20 @@ class ProjectController {
     }
   }
 
-  // create(project_params) {
-  //   const project = new Project({ project_params });
+  destroy(id) {
+    Project.delete(id);
 
-  //   if (project.save()) {
-  //     this.renderer.index();
-  //   } else {
-  //     this.renderer.new();
-  //   }
-  // }
+    this.index();
+  }
+
+  create() {
+    const project = new Project({ title: "New Project" });
+
+    if (project.save()) {
+      project.update({ title: `Project ${project.id + 1}` });
+      this.index();
+    }
+  }
 }
 
 export default new ProjectController();

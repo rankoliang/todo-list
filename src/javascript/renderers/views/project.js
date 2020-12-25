@@ -56,6 +56,11 @@ class ProjectShow extends Template {
       template: "titleGroup",
     });
 
+    //     console.log(projectController.destroy);
+    this.input["delete"].addEventListener("click", () => {
+      projectController.destroy(this.project.id);
+    });
+
     return element;
   }
 }
@@ -89,7 +94,7 @@ class ProjectShowForm extends Template {
       })),
       (this.input["confirm"] = build({
         tag: "input",
-        type: "button",
+        type: "submit",
         classes: ["btn", "btn__green"],
         name: "confirm-project-rename",
         value: "Y",
@@ -115,9 +120,11 @@ class ProjectShowForm extends Template {
 }
 
 const projectIndex = function (projects) {
-  return [
+  const buttons = {};
+
+  const elements = [
     ...projects.map(projectPartial),
-    build(
+    (buttons["newProject"] = build(
       { tag: "form" },
       build({
         tag: "input",
@@ -126,8 +133,14 @@ const projectIndex = function (projects) {
         type: "button",
         value: "New Project",
       })
-    ),
+    )),
   ];
+
+  buttons["newProject"].addEventListener("click", () => {
+    projectController.create();
+  });
+
+  return elements;
 };
 
 export { projectPartial, projectIndex };
