@@ -1,18 +1,12 @@
-import { build, attach } from "./helpers";
+import { build, attach, clearNode } from "./helpers";
 
 class Renderer {
   constructor() {
     this.content = document.querySelector("#content");
   }
 
-  static clearNode(node) {
-    while (node.firstChild) {
-      node.removeChild(node.lastChild);
-    }
-  }
-
   render(route, route_params) {
-    this.constructor.clearNode(this.content);
+    clearNode(this.content);
 
     this.buildComponent(route, route_params, this.content);
   }

@@ -41,4 +41,10 @@ function capitalize(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-export { objectMap, cast, build, attach, capitalize };
+function clearNode(node) {
+  while (node.firstChild) {
+    node.removeChild(node.lastChild);
+  }
+}
+
+export { objectMap, cast, build, attach, capitalize, clearNode };
