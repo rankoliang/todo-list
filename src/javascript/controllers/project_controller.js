@@ -10,6 +10,21 @@ class ProjectController {
     this.renderer.render("index", { projects: Project.all });
   }
 
+  new() {
+    this.renderer.render("new", {
+      projects: Project.all,
+      project: new Project({ title: "" }),
+    });
+  }
+
+  create(projectParams) {
+    const project = new Project(projectParams);
+
+    if (project.save()) {
+      this.index();
+    }
+  }
+
   update(id, project_params) {
     const project = Project.find(id);
     if (project.update(project_params)) {
@@ -21,15 +36,6 @@ class ProjectController {
     Project.delete(id);
 
     this.index();
-  }
-
-  create() {
-    const project = new Project({ title: "New Project" });
-
-    if (project.save()) {
-      project.update({ title: `Project ${project.id + 1}` });
-      this.index();
-    }
   }
 }
 

@@ -102,38 +102,58 @@ class ProjectShowForm extends Template {
     );
 
     ["cancel", "confirm"].forEach((buttonRole) => {
-      this.buttonRenderTemplate.call(this, {
-        element,
-        buttonRole,
-        template: "titleGroup",
+      this.input[buttonRole].addEventListener("click", (e) => {
+        e.preventDefault();
+        projectController.index();
       });
     });
 
     this.input["confirm"].addEventListener("click", () => {
-      projectController.update(this.project.id, {
-        title: this.input["title"].value,
-      });
+      if (this.project.id === null) {
+        projectController.create({ title: this.input["title"].value });
+      } else {
+        projectController.update(this.project.id, {
+          title: this.input["title"].value,
+        });
+      }
     });
 
     return element;
   }
 }
 
-const projectIndex = function (projects) {
-  const buttons = {};
+const _all_projects = function (projects) {
+  return projects.map(projectPartial);
+};
 
-  const elements = [
-    ...projects.map(projectPartial),
-    (buttons["newProject"] = build(
-      { tag: "form" },
-      build({
-        tag: "input",
-        classes: ["btn", "btn__yellow", "project--create"],
-        name: "project--create",
-        type: "button",
-        value: "New Project",
-      })
-    )),
+const projectIndex = function (projects) {
+  return [..._all_projects(projects), newProjectButton];
+};
+
+const newProjectButton = (function () {
+  const button = build(
+    { tag: "form" },
+    build({
+      tag: "input",
+      classes: ["btn", "btn__yellow", "project--create"],
+      name: "project--create",
+      type: "button",
+      value: "New Project",
+    })
+  );
+
+  button.addEventListener("click", () => {
+    projectController.new();
+  });
+
+  return button;
+})();
+
+const projectNew = function (projects, project) {
+  return [
+    ..._all_projects(projects),
+    new ProjectShowForm({ project }).titleGroup,
+    newProjectButton,
   ];
 
   buttons["newProject"].addEventListener("click", () => {
@@ -143,4 +163,4 @@ const projectIndex = function (projects) {
   return elements;
 };
 
-export { projectPartial, projectIndex };
+export { projectPartial, projectIndex, projectNew };
