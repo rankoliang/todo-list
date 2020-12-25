@@ -1,6 +1,7 @@
 import { build } from "../../helpers";
 import { todoIndex } from "./todo";
 import Template from "./template";
+import projectController from "../../controllers/project_controller";
 
 const projectPartial = function (project) {
   const projectShow = new ProjectShow({ project: project });
@@ -32,14 +33,14 @@ class ProjectShow extends Template {
       }),
       build(
         { tag: "form" },
-        (this.buttons["edit"] = build({
+        (this.input["edit"] = build({
           tag: "input",
           classes: ["btn", "btn__yellow"],
           type: "button",
           name: "edit-project",
           value: "Edit",
         })),
-        (this.buttons["delete"] = build({
+        (this.input["delete"] = build({
           tag: "input",
           classes: ["btn", "btn__red"],
           type: "button",
@@ -70,7 +71,7 @@ class ProjectShowForm extends Template {
         tag: "form",
         classes: ["project--title-group", "project--edit-title"],
       },
-      build({
+      (this.input["title"] = build({
         tag: "input",
         type: "text",
         class: "project--title",
@@ -78,15 +79,15 @@ class ProjectShowForm extends Template {
         placeholder: "Project Title",
         value: this.project.title,
         size: "8",
-      }),
-      (this.buttons["cancel"] = build({
+      })),
+      (this.input["cancel"] = build({
         tag: "input",
         type: "button",
         classes: ["btn", "btn__red"],
         name: "cancel-project-rename",
         value: "N",
       })),
-      (this.buttons["confirm"] = build({
+      (this.input["confirm"] = build({
         tag: "input",
         type: "button",
         classes: ["btn", "btn__green"],
@@ -95,10 +96,18 @@ class ProjectShowForm extends Template {
       }))
     );
 
-    this.buttonRenderTemplate({
-      element,
-      buttonRole: "cancel",
-      template: "titleGroup",
+    ["cancel", "confirm"].forEach((buttonRole) => {
+      this.buttonRenderTemplate.call(this, {
+        element,
+        buttonRole,
+        template: "titleGroup",
+      });
+    });
+
+    this.input["confirm"].addEventListener("click", () => {
+      projectController.update(this.project.id, {
+        title: this.input["title"].value,
+      });
     });
 
     return element;

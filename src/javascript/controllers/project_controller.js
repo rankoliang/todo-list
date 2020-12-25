@@ -10,6 +10,13 @@ class ProjectController {
     this.renderer.render("index", { projects: Project.all });
   }
 
+  update(id, project_params) {
+    const project = Project.find(id);
+    if (project.update(project_params)) {
+      this.index();
+    }
+  }
+
   // create(project_params) {
   //   const project = new Project({ project_params });
 

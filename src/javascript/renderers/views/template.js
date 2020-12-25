@@ -1,12 +1,12 @@
 class Template {
   constructor(model) {
     this.model = model;
-    this.buttons = {};
+    this.input = {};
     Object.assign(this, model);
   }
 
   buttonRenderTemplate({ buttonRole, element, template }) {
-    this.buttons[buttonRole].addEventListener("click", () => {
+    this.input[buttonRole].addEventListener("click", () => {
       element.parentNode.replaceChild(
         new this.constructor.alternate(this.model)[template],
         element
