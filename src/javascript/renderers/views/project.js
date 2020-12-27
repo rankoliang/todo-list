@@ -4,11 +4,11 @@ import Template from "./template";
 import projectController from "../../controllers/project_controller";
 
 const projectPartial = function (project) {
-  const projectShow = new ProjectShow({ project: project });
+  const projectTemplate = new ProjectTemplate({ project: project });
 
   const partial = build(
     { tag: "div", classes: ["project"] },
-    projectShow.titleGroup,
+    projectTemplate.titleGroup,
     build(
       { tag: "div", classes: ["project--card"] },
       ...todoIndex(project.todos)
@@ -18,9 +18,9 @@ const projectPartial = function (project) {
   return partial;
 };
 
-class ProjectShow extends Template {
+class ProjectTemplate extends Template {
   static get alternate() {
-    return ProjectShowForm;
+    return ProjectFormTemplate;
   }
 
   get titleGroup() {
@@ -65,9 +65,9 @@ class ProjectShow extends Template {
   }
 }
 
-class ProjectShowForm extends Template {
+class ProjectFormTemplate extends Template {
   static get alternate() {
-    return ProjectShow;
+    return ProjectTemplate;
   }
 
   get titleGroup() {
@@ -122,15 +122,15 @@ class ProjectShowForm extends Template {
   }
 }
 
-const _all_projects = function (projects) {
+const _project_elements = function (projects) {
   return projects.map(projectPartial);
 };
 
 const projectIndex = function (projects) {
-  return [..._all_projects(projects), newProjectButton];
+  return [..._project_elements(projects), newProjectButton()];
 };
 
-const newProjectButton = (function () {
+const newProjectButton = function () {
   const button = build(
     { tag: "form" },
     build({
@@ -147,20 +147,14 @@ const newProjectButton = (function () {
   });
 
   return button;
-})();
+};
 
 const projectNew = function (projects, project) {
   return [
-    ..._all_projects(projects),
-    new ProjectShowForm({ project }).titleGroup,
+    ..._project_elements(projects),
+    new ProjectFormTemplate({ project }).titleGroup,
     newProjectButton,
   ];
-
-  buttons["newProject"].addEventListener("click", () => {
-    projectController.create();
-  });
-
-  return elements;
 };
 
 export { projectPartial, projectIndex, projectNew };
