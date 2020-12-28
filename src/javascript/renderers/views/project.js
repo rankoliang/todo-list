@@ -1,26 +1,11 @@
 import { build } from "../../helpers";
 import { todoIndex } from "./todo";
-import Template from "./template";
+import Partial from "./partial";
 import projectController from "../../controllers/project_controller";
 
-const projectPartial = function (project) {
-  const projectTemplate = new ProjectTemplate({ project: project });
-
-  const partial = build(
-    { tag: "div", classes: ["project"] },
-    projectTemplate.titleGroup,
-    build(
-      { tag: "div", classes: ["project--card"] },
-      ...todoIndex(project.todos)
-    )
-  );
-
-  return partial;
-};
-
-class ProjectTemplate extends Template {
+class ProjectPartial extends Partial {
   static get alternate() {
-    return ProjectFormTemplate;
+    return ProjectFormPartial;
   }
 
   get titleGroup() {
@@ -58,16 +43,29 @@ class ProjectTemplate extends Template {
 
     //     console.log(projectController.destroy);
     this.input["delete"].addEventListener("click", () => {
-      projectController.destroy(this.project.id);
+      if (confirm(`Are you sure you want to delete ${this.project.title}`)) {
+        projectController.destroy(this.project.id);
+      }
     });
 
     return element;
   }
+
+  get element() {
+    return build(
+      { tag: "div", classes: ["project"] },
+      this.titleGroup,
+      build(
+        { tag: "div", classes: ["project--card"] },
+        ...todoIndex(this.project.todos)
+      )
+    );
+  }
 }
 
-class ProjectFormTemplate extends Template {
+class ProjectFormPartial extends Partial {
   static get alternate() {
-    return ProjectTemplate;
+    return ProjectPartial;
   }
 
   get titleGroup() {
@@ -123,7 +121,7 @@ class ProjectFormTemplate extends Template {
 }
 
 const _project_elements = function (projects) {
-  return projects.map(projectPartial);
+  return projects.map((project) => new ProjectPartial({ project }).element);
 };
 
 const projectIndex = function (projects) {
@@ -152,9 +150,9 @@ const newProjectButton = function () {
 const projectNew = function (projects, project) {
   return [
     ..._project_elements(projects),
-    new ProjectFormTemplate({ project }).titleGroup,
-    newProjectButton,
+    new ProjectFormPartial({ project }).titleGroup,
+    newProjectButton(),
   ];
 };
 
-export { projectPartial, projectIndex, projectNew };
+export { projectIndex, projectNew };

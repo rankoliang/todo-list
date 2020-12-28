@@ -1,8 +1,10 @@
-import Template from "./template";
+import Partial from "./partial";
 import { attach, build, capitalize } from "../../helpers";
 import { format, parseISO } from "date-fns";
+import { isPast } from "date-fns";
+import projectController from "../../controllers/project_controller";
 
-class TodoTemplate extends Template {
+class TodoPartial extends Partial {
   get checkbox() {
     const element = build({
       tag: "input",
@@ -37,7 +39,7 @@ class TodoTemplate extends Template {
   }
 
   get footer() {
-    return build(
+    const element = build(
       { tag: "div", classes: ["todo--info"] },
       build({
         tag: "div",
@@ -49,7 +51,9 @@ class TodoTemplate extends Template {
       build({
         tag: "div",
         classes: ["todo--due-date"],
-        textContent: `Due ${this.todo.formatted_date}`,
+        textContent: isPast(this.todo.dueDate)
+          ? `Was due on ${this.todo.formatted_date}`
+          : `Due ${this.todo.formatted_date}`,
       }),
       build(
         { tag: "form", classes: ["todo--buttons"] },
@@ -65,19 +69,35 @@ class TodoTemplate extends Template {
         }))
       )
     );
+
+    this.input["delete"].addEventListener("click", (e) => {
+      e.preventDefault();
+      if (confirm(`Are you sure you want to remove ${this.todo.title}?`)) {
+        this.todo.delete();
+        this.element.remove();
+      }
+    });
+
+    this.input["edit"].addEventListener("click", (e) => {
+      e.preventDefault();
+      this.element.parentNode.replaceChild(
+        new TodoFormPartial({ todo: this.todo }).partial,
+        this.element
+      );
+    });
+
+    return element;
   }
 
   get partial() {
-    return build(
-      { tag: "div", classes: ["todo"] },
-      this.checkbox,
-      this.body,
-      this.footer
-    );
+    this.element = build({ tag: "div", classes: ["todo"] });
+    attach(this.element, ...[this.checkbox, this.body, this.footer]);
+
+    return this.element;
   }
 }
 
-class TodoFormTemplate extends TodoTemplate {
+class TodoFormPartial extends TodoPartial {
   get checkbox() {
     const element = build({
       tag: "input",
@@ -121,18 +141,18 @@ class TodoFormTemplate extends TodoTemplate {
   get footer() {
     const element = build(
       { tag: "div", classes: ["form-field"] },
-      build({
+      (this.input["cancel"] = build({
         tag: "input",
         type: "button",
         classes: ["btn", "btn__red"],
         value: "Cancel",
-      }),
-      (this.input["submit"] = build({
+      })),
+      build({
         tag: "input",
         type: "submit",
         classes: ["btn", "btn__green"],
         value: "Confirm",
-      }))
+      })
     );
 
     this.form.addEventListener("submit", (e) => {
@@ -147,7 +167,7 @@ class TodoFormTemplate extends TodoTemplate {
 
       if (this.todo.save()) {
         this.form.parentNode.replaceChild(
-          new TodoTemplate({ todo: this.todo }).partial,
+          new TodoPartial({ todo: this.todo }).partial,
           this.form
         );
       } else {
@@ -155,11 +175,19 @@ class TodoFormTemplate extends TodoTemplate {
       }
     });
 
+    this.input["cancel"].addEventListener("click", () => {
+      projectController.index();
+    });
+
     return element;
   }
 
   get partial() {
-    this.form = build({ tag: "form", classes: ["todo"], id: "new-todo-form" });
+    this.form = build({
+      tag: "form",
+      classes: ["todo"],
+      id: this.todo.id ? "edit-todo-form" : "new-todo-form",
+    });
     attach(this.form, ...[this.checkbox, this.body, this.footer]);
     return this.form;
   }
@@ -226,7 +254,7 @@ const newTodoButton = function (todo) {
     }
 
     button.parentNode.insertBefore(
-      new TodoFormTemplate({ todo }).partial,
+      new TodoFormPartial({ todo }).partial,
       button
     );
   });
@@ -235,11 +263,11 @@ const newTodoButton = function (todo) {
 };
 
 function _todo_elements(todos) {
-  return todos.map((todo) => new TodoTemplate({ todo }).partial);
+  return todos.map((todo) => new TodoPartial({ todo }).partial);
 }
 
 const todoIndex = function (todos) {
   return [..._todo_elements(todos), newTodoButton(todos.build({}))];
 };
 
-export { todoIndex, TodoTemplate };
+export { todoIndex, TodoPartial };

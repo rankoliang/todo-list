@@ -1,4 +1,4 @@
-class Template {
+class Partial {
   constructor(model) {
     this.model = model;
     this.input = {};
@@ -15,4 +15,4 @@ class Template {
   }
 }
 
-export default Template;
+export default Partial;
