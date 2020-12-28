@@ -1,8 +1,9 @@
 import { build, capitalize } from "../../helpers";
 import Template from "./template";
 import Todo from "../../models/todo";
+import { format } from "date-fns";
 
-const todoPartial = function (todo, { TodoTemplateClass = TodoTemplate }) {
+const todoPartial = function (todo, { TodoTemplateClass = TodoTemplate } = {}) {
   const todoTemplate = new TodoTemplateClass({ todo });
 
   const partial = build(
@@ -79,6 +80,96 @@ class TodoTemplate extends Template {
       )
     );
   }
+
+  get partial() {
+    return build(
+      { tag: "div", classes: ["todo"] },
+      this.checkbox,
+      this.body,
+      this.footer
+    );
+  }
+}
+
+class TodoFormTemplate extends TodoTemplate {
+  get checkbox() {
+    const element = build({
+      tag: "input",
+      type: "checkbox",
+      name: "todo-complete",
+      checked: this.todo.complete,
+    });
+
+    element.addEventListener("change", (e) => {
+      this.todo.complete = e.target.checked;
+    });
+
+    return element;
+  }
+
+  get body() {
+    return build(
+      { tag: "div" },
+      this.input_field("Title", { value: this.todo.title, required: true }),
+      this.input_field("Description", {
+        value: this.todo.description,
+        required: true,
+      }),
+      this.select_field(
+        "priority",
+        {
+          low: "Low",
+          medium: "Medium",
+          high: "High",
+        },
+        this.todo.priority
+      ),
+      this.input_field("due-date", {
+        type: "date",
+        value: format(this.todo.dueDate, "yyyy-MM-dd"),
+        required: true,
+      })
+    );
+  }
+
+  get footer() {
+    return build({ tag: "div" });
+  }
+
+  _form_field(field, interactive_tag) {
+    return build(
+      { tag: "div", classes: ["form-field"] },
+      build({ tag: "label", for: field, textContent: capitalize(field) }),
+      interactive_tag
+    );
+  }
+
+  input_field(
+    field,
+    { value = "", type = "text", placeholder = "", required = false } = {}
+  ) {
+    return this._form_field(
+      field,
+      build({ tag: "input", name: field, value, placeholder, type, required })
+    );
+  }
+
+  select_field(field, options, selected_value) {
+    return this._form_field(
+      field,
+      build(
+        { tag: "select", name: field },
+        ...Object.entries(options).map(([value, textContent]) => {
+          return build({
+            tag: "option",
+            value,
+            textContent,
+            selected: value === selected_value,
+          });
+        })
+      )
+    );
+  }
 }
 
 const newTodoButton = function () {
@@ -94,7 +185,10 @@ const newTodoButton = function () {
   );
 
   button.addEventListener("click", () => {
-    button.parentNode.insertBefore(todoPartial(new Todo()), button);
+    button.parentNode.insertBefore(
+      todoPartial(new Todo(), { TodoTemplateClass: TodoFormTemplate }),
+      button
+    );
   });
 
   return button;
