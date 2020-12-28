@@ -1,20 +1,6 @@
-import { build, capitalize } from "../../helpers";
 import Template from "./template";
-import Todo from "../../models/todo";
-import { format } from "date-fns";
-
-const todoPartial = function (todo, { TodoTemplateClass = TodoTemplate } = {}) {
-  const todoTemplate = new TodoTemplateClass({ todo });
-
-  const partial = build(
-    { tag: "div", classes: ["todo"] },
-    todoTemplate.checkbox,
-    todoTemplate.body,
-    todoTemplate.footer
-  );
-
-  return partial;
-};
+import { attach, build, capitalize } from "../../helpers";
+import { format, parseISO } from "date-fns";
 
 class TodoTemplate extends Template {
   get checkbox() {
@@ -110,8 +96,8 @@ class TodoFormTemplate extends TodoTemplate {
   get body() {
     return build(
       { tag: "div" },
-      this.input_field("Title", { value: this.todo.title, required: true }),
-      this.input_field("Description", {
+      this.input_field("title", { value: this.todo.title, required: true }),
+      this.input_field("description", {
         value: this.todo.description,
         required: true,
       }),
@@ -133,14 +119,56 @@ class TodoFormTemplate extends TodoTemplate {
   }
 
   get footer() {
-    return build({ tag: "div" });
+    const element = build(
+      { tag: "div", classes: ["form-field"] },
+      build({
+        tag: "input",
+        type: "button",
+        classes: ["btn", "btn__red"],
+        value: "Cancel",
+      }),
+      (this.input["submit"] = build({
+        tag: "input",
+        type: "submit",
+        classes: ["btn", "btn__green"],
+        value: "Confirm",
+      }))
+    );
+
+    this.form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      this.todo.assign_attributes({
+        title: this.input["title"].value,
+        description: this.input["description"].value,
+        priority: this.input["priority"].value,
+        dueDate: parseISO(this.input["due-date"].value),
+      });
+
+      if (this.todo.save()) {
+        this.form.parentNode.replaceChild(
+          new TodoTemplate({ todo: this.todo }).partial,
+          this.form
+        );
+      } else {
+        alert("One or more of your form parameters are not valid");
+      }
+    });
+
+    return element;
+  }
+
+  get partial() {
+    this.form = build({ tag: "form", classes: ["todo"], id: "new-todo-form" });
+    attach(this.form, ...[this.checkbox, this.body, this.footer]);
+    return this.form;
   }
 
   _form_field(field, interactive_tag) {
     return build(
       { tag: "div", classes: ["form-field"] },
       build({ tag: "label", for: field, textContent: capitalize(field) }),
-      interactive_tag
+      (this.input[field] = interactive_tag)
     );
   }
 
@@ -150,7 +178,14 @@ class TodoFormTemplate extends TodoTemplate {
   ) {
     return this._form_field(
       field,
-      build({ tag: "input", name: field, value, placeholder, type, required })
+      build({
+        tag: "input",
+        name: field,
+        value,
+        placeholder,
+        type,
+        required,
+      })
     );
   }
 
@@ -172,7 +207,7 @@ class TodoFormTemplate extends TodoTemplate {
   }
 }
 
-const newTodoButton = function () {
+const newTodoButton = function (todo) {
   const button = build(
     { tag: "form" },
     build({
@@ -185,8 +220,13 @@ const newTodoButton = function () {
   );
 
   button.addEventListener("click", () => {
+    const todoForm = document.getElementById("new-todo-form");
+    if (todoForm) {
+      todoForm.remove();
+    }
+
     button.parentNode.insertBefore(
-      todoPartial(new Todo(), { TodoTemplateClass: TodoFormTemplate }),
+      new TodoFormTemplate({ todo }).partial,
       button
     );
   });
@@ -195,11 +235,11 @@ const newTodoButton = function () {
 };
 
 function _todo_elements(todos) {
-  return todos.map(todoPartial);
+  return todos.map((todo) => new TodoTemplate({ todo }).partial);
 }
 
 const todoIndex = function (todos) {
-  return [..._todo_elements(todos), newTodoButton()];
+  return [..._todo_elements(todos), newTodoButton(todos.build({}))];
 };
 
-export { todoPartial, todoIndex };
+export { todoIndex, TodoTemplate };
