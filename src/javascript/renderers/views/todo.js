@@ -60,7 +60,7 @@ class TodoPartial extends Partial {
         (this.input["edit"] = build({
           tag: "button",
           classes: ["todo--edit"],
-          textContent: "Edit",
+          textContent: "Show/Edit",
         })),
         (this.input["delete"] = build({
           tag: "button",
@@ -114,6 +114,7 @@ class TodoFormPartial extends TodoPartial {
   }
 
   get body() {
+    console.log(format(this.todo.dueDate, "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"));
     return build(
       { tag: "div" },
       this.input_field("title", { value: this.todo.title, required: true }),
@@ -131,8 +132,8 @@ class TodoFormPartial extends TodoPartial {
         this.todo.priority
       ),
       this.input_field("due-date", {
-        type: "date",
-        value: format(this.todo.dueDate, "yyyy-MM-dd"),
+        type: "datetime-local",
+        value: format(this.todo.dueDate, "yyyy-MM-dd'T'HH:mm:ss.SSS"),
         required: true,
       })
     );

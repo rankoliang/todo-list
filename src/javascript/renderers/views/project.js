@@ -17,7 +17,7 @@ class ProjectPartial extends Partial {
         textContent: this.project.title,
       }),
       build(
-        { tag: "form" },
+        { tag: "form", classes: ["no-wrap"] },
         (this.input["edit"] = build({
           tag: "input",
           classes: ["btn", "btn__yellow"],
@@ -41,9 +41,8 @@ class ProjectPartial extends Partial {
       template: "titleGroup",
     });
 
-    //     console.log(projectController.destroy);
     this.input["delete"].addEventListener("click", () => {
-      if (confirm(`Are you sure you want to delete ${this.project.title}`)) {
+      if (confirm(`Are you sure you want to delete '${this.project.title}'?`)) {
         projectController.destroy(this.project.id);
       }
     });
@@ -74,14 +73,12 @@ class ProjectFormPartial extends Partial {
         tag: "form",
         classes: ["project--title-group", "project--edit-title"],
       },
-      (this.input["title"] = build({
+      (this.input["confirm"] = build({
         tag: "input",
-        type: "text",
-        class: "project--title",
-        name: "project-title",
-        placeholder: "Project Title",
-        value: this.project.title,
-        size: "8",
+        type: "submit",
+        classes: ["btn", "btn__green"],
+        name: "confirm-project-rename",
+        value: "Y",
       })),
       (this.input["cancel"] = build({
         tag: "input",
@@ -90,12 +87,13 @@ class ProjectFormPartial extends Partial {
         name: "cancel-project-rename",
         value: "N",
       })),
-      (this.input["confirm"] = build({
+      (this.input["title"] = build({
         tag: "input",
-        type: "submit",
-        classes: ["btn", "btn__green"],
-        name: "confirm-project-rename",
-        value: "Y",
+        type: "text",
+        classes: ["project--title"],
+        name: "project-title",
+        placeholder: "Project Title",
+        value: this.project.title,
       }))
     );
 
@@ -129,22 +127,23 @@ const projectIndex = function (projects) {
 };
 
 const newProjectButton = function () {
-  const button = build(
+  let button;
+  const form = build(
     { tag: "form" },
-    build({
+    (button = build({
       tag: "input",
       classes: ["btn", "btn__yellow", "project--create"],
       name: "project--create",
       type: "button",
       value: "New Project",
-    })
+    }))
   );
 
   button.addEventListener("click", () => {
     projectController.new();
   });
 
-  return button;
+  return form;
 };
 
 const projectNew = function (projects, project) {

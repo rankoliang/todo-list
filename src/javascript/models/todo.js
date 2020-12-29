@@ -34,7 +34,7 @@ class Todo extends Model {
   }
 
   get formatted_date() {
-    return format(this.dueDate, "MM/dd/yyyy");
+    return format(this.dueDate, "MM/dd/yyyy HH:mm");
   }
 }
 
