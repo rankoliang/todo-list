@@ -1,6 +1,6 @@
 import Partial from "../partial";
 import TodoFormPartial from "./_form_partial";
-import { attach, build, capitalize } from "../../../helpers";
+import { attach, build, capitalize } from "../../../utilities/helpers";
 import { isPast } from "date-fns";
 
 class TodoPartial extends Partial {

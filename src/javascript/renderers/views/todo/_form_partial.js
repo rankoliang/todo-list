@@ -1,7 +1,7 @@
 import FormPartial from "../form_partial";
 import TodoPartial from "./_partial";
 import projectController from "../../../controllers/project_controller";
-import { attach, build } from "../../../helpers";
+import { attach, build } from "../../../utilities/helpers";
 import { format, parseISO } from "date-fns";
 
 class TodoFormPartial extends FormPartial {

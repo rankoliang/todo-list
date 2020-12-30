@@ -1,5 +1,5 @@
-import Model from "../model";
-import ModelCollection from "../model_collection";
+import Model from "../utilities/models/model";
+import ModelCollection from "../utilities/models/model_collection";
 import Todo from "./todo";
 
 class Project extends Model {

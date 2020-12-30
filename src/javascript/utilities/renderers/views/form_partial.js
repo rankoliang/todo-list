@@ -1,4 +1,4 @@
-import { build, capitalize } from "../../utilities/helpers";
+import { build, capitalize } from "../../helpers";
 import Partial from "./partial";
 
 class FormPartial extends Partial {

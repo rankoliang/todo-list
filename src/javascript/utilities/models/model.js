@@ -1,5 +1,5 @@
-import LocalStorageMixin from "./mixins/local_storage";
-import { objectMap, cast } from "./utilities/helpers";
+import LocalStorageMixin from "../mixins/local_storage";
+import { objectMap, cast } from "../helpers";
 
 class BaseModel {
   constructor({ id = null, format, ...model_params } = {}) {

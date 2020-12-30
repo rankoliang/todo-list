@@ -1,4 +1,4 @@
-import Model from "../model";
+import Model from "../utilities/models/model";
 import Project from "./project";
 import { format } from "date-fns";
 

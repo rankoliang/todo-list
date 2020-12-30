@@ -1,4 +1,4 @@
-import { build, attach, clearNode } from "./utilities/helpers";
+import { build, attach, clearNode } from "../helpers";
 
 class Renderer {
   constructor() {
