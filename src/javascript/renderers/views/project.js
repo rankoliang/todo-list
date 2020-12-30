@@ -1,5 +1,5 @@
 import { build } from "../../helpers";
-import { todoIndex } from "./todo";
+import todoIndex from "./todo/index";
 import Partial from "./partial";
 import projectController from "../../controllers/project_controller";
 
