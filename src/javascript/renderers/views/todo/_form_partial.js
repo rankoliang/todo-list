@@ -41,6 +41,8 @@ class TodoFormPartial extends FormPartial {
         type: "datetime-local",
         value: format(this.todo.dueDate, "yyyy-MM-dd'T'HH:mm"),
         required: true,
+        pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}",
+        title: "2020-01-01T16:00",
       })
     );
   }

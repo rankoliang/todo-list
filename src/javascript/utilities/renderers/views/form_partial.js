@@ -12,7 +12,13 @@ class FormPartial extends Partial {
 
   input_field(
     field,
-    { value = "", type = "text", placeholder = "", required = false } = {}
+    {
+      value = "",
+      type = "text",
+      placeholder = "",
+      required = false,
+      ...attributes
+    } = {}
   ) {
     return this._form_field(
       field,
@@ -23,6 +29,7 @@ class FormPartial extends Partial {
         placeholder,
         type,
         required,
+        ...attributes,
       })
     );
   }
