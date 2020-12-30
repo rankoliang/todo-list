@@ -1,3 +1,4 @@
 node_modules/
 *.map
 tmux-client-*.log
+dist/main.js.LICENSE.txt

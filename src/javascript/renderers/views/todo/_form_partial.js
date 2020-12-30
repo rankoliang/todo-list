@@ -2,7 +2,8 @@ import FormPartial from "../../../utilities/renderers/views/form_partial";
 import TodoPartial from "./_partial";
 import projectController from "../../../controllers/project_controller";
 import { attach, build } from "../../../utilities/helpers";
-import { format, parseISO } from "date-fns";
+import { format, parse, parseISO } from "date-fns";
+import Modernizr from "../../../utilities/modernizr";
 
 class TodoFormPartial extends FormPartial {
   get checkbox() {
@@ -18,6 +19,32 @@ class TodoFormPartial extends FormPartial {
     });
 
     return element;
+  }
+
+  get dueDateField() {
+    if (Modernizr.inputtypes["datetime-local"]) {
+      return this.input_field("due-date", {
+        type: "datetime-local",
+        value: format(this.todo.dueDate, "yyyy-MM-dd'T'HH:mm"),
+        required: true,
+        pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}",
+        title: "2020-01-01T16:00",
+      });
+    } else {
+      return build(
+        { tag: "div" },
+        this.input_field("Due date", {
+          type: "date",
+          value: format(this.todo.dueDate, "yyyy-MM-dd"),
+          required: true,
+        }),
+        this.input_field("Due time", {
+          type: "time",
+          value: format(this.todo.dueDate, "HH:mm"),
+          required: true,
+        })
+      );
+    }
   }
 
   get body() {
@@ -37,13 +64,7 @@ class TodoFormPartial extends FormPartial {
         },
         this.todo.priority
       ),
-      this.input_field("due-date", {
-        type: "datetime-local",
-        value: format(this.todo.dueDate, "yyyy-MM-dd'T'HH:mm"),
-        required: true,
-        pattern: "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}",
-        title: "2020-01-01T16:00",
-      })
+      this.dueDateField
     );
   }
 
@@ -71,7 +92,7 @@ class TodoFormPartial extends FormPartial {
         title: this.input["title"].value,
         description: this.input["description"].value,
         priority: this.input["priority"].value,
-        dueDate: parseISO(this.input["due-date"].value),
+        dueDate: this.parseDueDate(),
       });
 
       if (this.todo.save()) {
@@ -89,6 +110,16 @@ class TodoFormPartial extends FormPartial {
     });
 
     return element;
+  }
+
+  parseDueDate() {
+    if (Modernizr.inputtypes["datetime-local"]) {
+      return parseISO(this.input["due-date"].value);
+    } else {
+      const date = this.input["Due date"].value;
+      const time = this.input["Due time"].value;
+      return parse(`${date} ${time}`, "yyyy-MM-dd HH:mm", Date.now());
+    }
   }
 
   get partial() {

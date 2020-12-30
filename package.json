@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "modernizr": "modernizr -c modernizr-config.json -d src/javascript/utilities/ -u",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -16,6 +17,7 @@
     "webpack-cli": "^4.2.0"
   },
   "dependencies": {
-    "date-fns": "^2.16.1"
+    "date-fns": "^2.16.1",
+    "modernizr": "^3.11.4"
   }
 }
