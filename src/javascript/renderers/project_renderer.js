@@ -1,5 +1,6 @@
 import Renderer from "../utilities/renderers/renderer";
-import { projectIndex, projectNew } from "./views/project";
+import projectIndex from "./views/project/index"
+import projectNew from "./views/project/new"
 
 class ProjectRenderer extends Renderer {
   index() {
