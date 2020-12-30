@@ -1,10 +1,10 @@
-import Partial from "../partial";
-import TodoPartial from "./_form_partial";
+import FormPartial from "../form_partial";
+import TodoPartial from "./_partial";
 import projectController from "../../../controllers/project_controller";
-import { attach, build, capitalize } from "../../../helpers";
+import { attach, build } from "../../../helpers";
 import { format, parseISO } from "date-fns";
 
-class TodoFormPartial extends Partial {
+class TodoFormPartial extends FormPartial {
   get checkbox() {
     const element = build({
       tag: "input",
@@ -96,59 +96,8 @@ class TodoFormPartial extends Partial {
       id: this.todo.id ? "edit-todo-form" : "new-todo-form",
     });
     attach(this.form, ...[this.checkbox, this.body, this.footer]);
+
     return this.form;
-  }
-
-  _form_field(field, interactive_tag) {
-    return build(
-      { tag: "div", classes: ["form-field"] },
-      build({ tag: "label", for: field, textContent: capitalize(field) }),
-      (this.input[field] = interactive_tag)
-    );
-  }
-
-  input_field(
-    field,
-    { value = "", type = "text", placeholder = "", required = false } = {}
-  ) {
-    return this._form_field(
-      field,
-      build({
-        tag: "input",
-        name: field,
-        value,
-        placeholder,
-        type,
-        required,
-      })
-    );
-  }
-
-  select_field(field, options, selected_value) {
-    return this._form_field(
-      field,
-      build(
-        { tag: "select", name: field },
-        ...Object.entries(options).map(([value, textContent]) => {
-          return build({
-            tag: "option",
-            value,
-            textContent,
-            selected: value === selected_value,
-          });
-        })
-      )
-    );
-  }
-  textarea_field(field, { value, required }) {
-    return this._form_field(
-      field,
-      build({
-        tag: "textarea",
-        value,
-        required,
-      })
-    );
   }
 }
 
