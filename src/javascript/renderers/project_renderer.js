@@ -1,4 +1,4 @@
-import Renderer from "../renderer";
+import Renderer from "../utilities/renderers/renderer";
 import { projectIndex, projectNew } from "./views/project";
 
 class ProjectRenderer extends Renderer {

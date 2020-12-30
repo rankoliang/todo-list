@@ -1,4 +1,4 @@
-import Renderer from "../renderer";
+import Renderer from "../utilities/renderers/renderer";
 import { todoIndex } from "./views/todo";
 
 class TodoRenderer extends Renderer {

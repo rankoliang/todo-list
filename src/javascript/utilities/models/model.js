@@ -1,4 +1,4 @@
-import LocalStorageMixin from "../mixins/local_storage";
+import LocalStorageMixin from "./mixins/local_storage";
 import { objectMap, cast } from "../helpers";
 
 class BaseModel {

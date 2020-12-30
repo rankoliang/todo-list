@@ -1,4 +1,4 @@
-import Partial from "../partial";
+import Partial from "../../../utilities/renderers/views/partial";
 import TodoFormPartial from "./_form_partial";
 import { attach, build, capitalize } from "../../../utilities/helpers";
 import { isPast } from "date-fns";

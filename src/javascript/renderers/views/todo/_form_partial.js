@@ -1,4 +1,4 @@
-import FormPartial from "../form_partial";
+import FormPartial from "../../../utilities/renderers/views/form_partial";
 import TodoPartial from "./_partial";
 import projectController from "../../../controllers/project_controller";
 import { attach, build } from "../../../utilities/helpers";

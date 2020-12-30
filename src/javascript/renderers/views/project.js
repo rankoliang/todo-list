@@ -1,6 +1,6 @@
 import { build } from "../../utilities/helpers";
 import todoIndex from "./todo/index";
-import Partial from "./partial";
+import Partial from "../../utilities/renderers/views/partial";
 import projectController from "../../controllers/project_controller";
 
 class ProjectPartial extends Partial {
