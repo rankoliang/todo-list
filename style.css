@@ -1,5 +1,33 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto:wght@400;700&display=swap");
 
+html {
+  font-size: 6px;
+}
+
+@media screen and (min-width: 350px) {
+  html {
+    font-size: 8px;
+  }
+}
+
+@media screen and (min-width: 450px) {
+  html {
+    font-size: 10px;
+  }
+}
+
+@media screen and (min-width: 600px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+@media screen and (min-width: 700px) {
+  html {
+    font-size: 18px;
+  }
+}
+
 * {
   font-family: "Open Sans", sans-serif;
   margin: 0;
@@ -34,7 +62,7 @@ header {
 }
 
 header h1 {
-  font-size: 3rem;
+  font-size: 2rem;
 }
 
 a:hover,
@@ -71,7 +99,7 @@ a:hover,
 }
 
 .btn {
-  font-size: 1.5rem;
+  font-size: 1rem;
   border: 1px solid black;
   padding: 0.1em 0.5em;
   border-radius: 3px;
@@ -111,7 +139,7 @@ a:hover,
 }
 
 .project--title {
-  font-size: 2.25rem;
+  font-size: 1.5;
   color: #222222;
 }
 .project--title,
@@ -141,9 +169,13 @@ a:hover,
 
 form.project--title-group > input[type="button"],
 form.project--title-group > input[type="submit"] {
-  height: 4rem;
-  width: 4rem;
-  font-size: 2rem;
+  height: 2rem;
+  width: 2rem;
+  font-size: 1rem;
+}
+
+textarea {
+  padding: 5px;
 }
 
 input.project--title {
@@ -154,13 +186,17 @@ input.project--title {
   outline: 0;
 }
 
+*:required {
+  box-shadow: none;
+}
+
 input::-webkit-input-placeholder {
   opacity: 0.5; /*Change the opacity between 0 and 1*/
   text-transform: uppercase;
 }
 
 .project--new-todo {
-  font-size: 1.5rem;
+  font-size: 1rem;
 }
 
 .project--card {
@@ -180,8 +216,8 @@ input::-webkit-input-placeholder {
 }
 
 .todo input[type="checkbox"] {
-  height: 2rem;
-  width: 2rem;
+  height: 1.5rem;
+  width: 1.5rem;
   grid-row: 1 / -1;
   grid-column-start: 1;
   align-self: center;
@@ -193,10 +229,7 @@ input[type="checkbox"]:hover {
 
 .todo--important,
 .form-field {
-  font-size: 1.5rem;
-}
-
-.todo--important {
+  font-size: 1rem;
 }
 
 .todo--info {
@@ -250,5 +283,5 @@ input[type="checkbox"]:hover {
 
 .project--create {
   margin: 0.25em 0;
-  font-size: 2rem;
+  font-size: 1.5rem;
 }
